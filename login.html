@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>东方票务</title>
+<meta name="description" content="东方票务">
+<meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1" media="(device-height: 568px)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="full-screen" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="address=no">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<div class="wrap">
+	<h1 class="f-title fix">东方票务</h1>
+	<div class="form">
+		<p class="logo"><img src="images/logo.png" alt="东方票务" style="max-width:100%"></p>
+		<div id="form-login">
+			<dl class="f-loop">
+				<dt><i class="icon-locked"></i><span>用户登录</span></dt>
+				<dd class="divider"></dd>
+				<dd><label>用户名</label>
+					<input type="text" placeholder="请输入" value="111"/>
+				</dd>
+				<dd><label>密码</label>
+					<input type="password" placeholder="请输入"/>
+				</dd>
+			</dl>
+			<ul class="flexbox">
+				<li class="flex1"><a href="#" class="btn" onClick="toggleLogin()">注册新用户</a></li>
+				<li class="flex1" style="text-align:right"><a href="#" class="btn">登录</a></li>
+			</ul>
+		</div>
+		<div id="form-reg" style="display:none">
+			<dl class="f-loop">
+				<dt><i class="icon-user"></i><span>新用户注册</span></dt>
+				<dd class="divider"></dd>
+				<dd><label>用户名</label>
+					<input type="text" placeholder="至少4个字符"/>
+				</dd>
+				<dd><label>密码</label>
+					<input type="text" placeholder="长度6-16位"/>
+				</dd>
+				<dd><label>邮箱</label>
+					<input type="email" placeholder="密码找回邮箱"/>
+				</dd>
+				<dd><label>手机号</label>
+					<input type="text" placeholder="需验证手机号"/>
+				</dd>
+				<dd><label>验证码</label>
+					<input type="text" style="width:80px;"/> <a href="#">点击获取</a>
+				</dd>
+				<dd><label>性别</label> <label>
+						<input type="radio" name="gender" value="男" id="gender-m">
+						男</label> <label>
+						<input type="radio" name="gender" value="女" id="gender-f">
+						女</label> </dd>
+			</dl>
+			<ul class="flexbox">
+				<li class="flex1"><a href="#" class="btn" onClick="toggleLogin()">已有账号</a></li>
+				<li class="flex1" style="text-align:right"><a href="#" class="btn">注册</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+</body>
+<script src="js/lib/jquery-1.8.2.min.js"></script>
+<script src="js/script.js"></script>
+</html>

@@ -6,11 +6,11 @@ $(function() {
     //mobile support
  
 })
-
-/*//window resize
-$(window).resize(function() {
-	fixMenu();
-});*/
+ 
+/*login*/
+function toggleLogin(){
+		$("#form-login, #form-reg").toggle();
+	}
 
 /*popwin */
 function popWin(){
