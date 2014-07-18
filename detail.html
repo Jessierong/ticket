@@ -13,10 +13,24 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="format-detection" content="address=no">
 <link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="js/lib/jquery-1.8.2.min.js"></script>
+<script src="js/iscroll.js"></script>
+<script src="js/script.js"></script>
+<script>
+$(function() {
+	var myscroll;
+	function loaded(){
+		setTimeout(function(){
+			myscroll=new iScroll("wrapper");
+		},100 );
+	}
+	window.addEventListener("load",loaded,false);
+})
+</script>
 </head>
 <body>
-<div class="wrap">
-	<div class="scroll">
+<div class="wrap" id="wrapper">
+	<div class="scroll" id="scroller">
 		<div class="t-detail">
 			<div class="t-inner flexbox">
 				<div class="t-photo f-new" style="background-image:url(post/201412116122.png)">
@@ -52,7 +66,7 @@
 			<li class="flex1"><a href="#">购票流程</a> </li>
 		</ul>
 		<div id="detailTab" class="detail-tab">
-			<div>
+			<div style="display:block">
 				<h2 class="detail-title">话剧《一个陌生女人的来信》</h2>
 				<img src="post/W020131016327893288751.jpg">
 				<p>“陌生女人”黄湘丽华丽来袭，极致“独角儿”—只要她站在台上，就有掩不住的光芒。</p>
@@ -60,7 +74,7 @@
 				<p>她用清纯、失贞、放荡守护着自己的初恋秘密到死，轮到他也要在余生中忍受着思念的煎熬...... </p>
 				<img src="post/20140311115727554511584.jpg" >
 			</div>
-			<div style="display:block">
+			<div>
 				<div class="t-select flexbox">
 					<ul class="flex1">
 						<li><label>演出时间</label>
@@ -124,11 +138,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="t-buy fix">
-		<a href="#" class="btn-buy">立刻购买</a>
-	</div>
+</div>
+<div class="t-buy fix">
+	<a href="#" class="btn-buy">立刻购买</a>
 </div>
 </body>
-<script src="js/lib/jquery-1.8.2.min.js"></script>
-<script src="js/script.js"></script>
 </html>

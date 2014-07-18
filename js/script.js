@@ -3,8 +3,6 @@ $(function() {
 	//initial
 	fixMenu();
 	tabselect()
-    //mobile support
- 
 })
  
 /*login*/
@@ -24,11 +22,9 @@ function closeWin(){
 
 function fixMenu(){
 	var winWidth = $(window).width();
-	if ( winWidth >= 320 ){
 		var winHeight = $(window).height();
 		var fixHeight = $(".fix").outerHeight();
-		$(".scroll").height( winHeight - fixHeight );
-	}
+		$("#wrapper").height( winHeight - fixHeight );
 }
  
 //tab select

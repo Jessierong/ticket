@@ -13,10 +13,24 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="format-detection" content="address=no">
 <link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="js/lib/jquery-1.8.2.min.js"></script>
+<script src="js/iscroll.js"></script>
+<script src="js/script.js"></script>
+<script>
+$(function() {
+	var myscroll;
+	function loaded(){
+		setTimeout(function(){
+			myscroll=new iScroll("wrapper");
+		},100 );
+	}
+	window.addEventListener("load",loaded,false);
+})
+</script>
 </head>
 <body>
+<h1 class="f-title fix">我的资料</h1>
 <div class="wrap">
-	<h1 class="f-title fix">我的资料</h1>
 	<div class="form">
 		<div class="f-list">
 			<dl class="f-loop">
@@ -58,6 +72,4 @@
 	</div>
 </div>
 </body>
-<script src="js/lib/jquery-1.8.2.min.js"></script>
-<script src="js/script.js"></script>
 </html>

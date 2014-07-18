@@ -13,28 +13,127 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="format-detection" content="address=no">
 <link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="js/lib/jquery-1.8.2.min.js"></script>
+<script src="js/iscroll.js"></script>
+<script>
+var myScroll,
+	pullDownEl, pullDownOffset,
+	pullUpEl, pullUpOffset,
+	generatedCount = 0;
+
+function pullDownAction () {
+	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+		var el, li, i;
+		el = document.getElementById('thelist');
+
+		for (i=0; i<3; i++) {
+			li = document.createElement('li');
+			li.innerText = 'Generated row ' + (++generatedCount);
+			el.insertBefore(li, el.childNodes[0]);
+		}
+		
+		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
+	}, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
+}
+
+function pullUpAction () {
+	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+		var el, li, i;
+		el = document.getElementById('thelist');
+
+		for (i=0; i<3; i++) {
+			li = document.createElement('li');
+			li.innerText = 'Generated row ' + (++generatedCount);
+			el.appendChild(li, el.childNodes[0]);
+		}
+		
+		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
+	}, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
+}
+
+function loaded() {
+	pullDownEl = document.getElementById('pullDown');
+	pullDownOffset = pullDownEl.offsetHeight;
+	pullUpEl = document.getElementById('pullUp');	
+	pullUpOffset = pullUpEl.offsetHeight;
+	
+	myScroll = new iScroll('wrapper', {
+		useTransition: true,
+		topOffset: pullDownOffset,
+		onRefresh: function () {
+			if (pullDownEl.className.match('loading')) {
+				pullDownEl.className = '';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
+			} else if (pullUpEl.className.match('loading')) {
+				pullUpEl.className = '';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
+			}
+		},
+		onScrollMove: function () {
+			if (this.y > 5 && !pullDownEl.className.match('flip')) {
+				pullDownEl.className = 'flip';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Release to refresh...';
+				this.minScrollY = 0;
+			} else if (this.y < 5 && pullDownEl.className.match('flip')) {
+				pullDownEl.className = '';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
+				this.minScrollY = -pullDownOffset;
+			} else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
+				pullUpEl.className = 'flip';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Release to refresh...';
+				this.maxScrollY = this.maxScrollY;
+			} else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
+				pullUpEl.className = '';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
+				this.maxScrollY = pullUpOffset;
+			}
+		},
+		onScrollEnd: function () {
+			if (pullDownEl.className.match('flip')) {
+				pullDownEl.className = 'loading';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Loading...';				
+				pullDownAction();	// Execute custom function (ajax call?)
+			} else if (pullUpEl.className.match('flip')) {
+				pullUpEl.className = 'loading';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Loading...';				
+				pullUpAction();	// Execute custom function (ajax call?)
+			}
+		}
+	});
+	
+	setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
+}
+
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+</script>
+<script src="js/script.js"></script>
 </head>
 <body>
- 
-<div class="wrap">
-	<ul class="menu flexbox fix">
-		<li class="flex1">
-			<a href="#">音乐会</a>
-		</li>
-		<li class="flex1">
-			<a href="#">演唱会</a>
-		</li>
-		<li class="flex1 select">
-			<a href="#">话剧</a>
-		</li class="flex1">
-		<li>
-			<a href="#">歌剧</a>
-		</li>
-		<li class="flex1">
-			<a href="#">更多</a>
-		</li>
-	</ul>
-	<div class="t-list scroll">
+<ul class="menu flexbox fix">
+	<li class="flex1">
+		<a href="#">音乐会</a>
+	</li>
+	<li class="flex1">
+		<a href="#">演唱会</a>
+	</li>
+	<li class="flex1 select">
+		<a href="#">话剧</a>
+	</li class="flex1">
+	<li>
+		<a href="#">歌剧</a>
+	</li>
+	<li class="flex1">
+		<a href="#">更多</a>
+	</li>
+</ul>
+<div id="wrapper">
+	<div id="scroller" class="t-list scroll">
+		<div id="pullDown">
+			<span class="pullDownIcon"></span><span class="pullDownLabel">Pull down to refresh...</span>
+		</div>
+		<div id="thelist">
 		<a href="detail.html" class="t-loop">
 		<div class="t-edge">
 			<div class="t-inner flexbox">
@@ -143,12 +242,66 @@
 				</div>
 			</div>
 		</a>
-		<div class="drag-d">
-			下拉加载更多
+		<a href="detail.html" class="t-loop">
+			<div class="t-edge">
+				<div class="t-inner flexbox">
+					<div class="t-photo" style=" background-image:url(post/201432717721.png)">
+					</div>
+					<div class="flex1">
+						<h1 class="t-title">超级喜剧《疯人院飞了》</h1>
+						<div class="divider">
+						</div>
+						<ul class="t-info">
+							<li>
+								<label><i class="icon-thumbs-o-up"></i>推荐指数</label>
+								<span class="rank"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span>
+							</li>
+							<li>
+								<label><i class="icon-calendar"></i>演出时间</label>
+								<span class="duration">14.05.14 - 15.05.18</span>
+							</li>
+							<li class="available">
+								<label><i class="i-book-seat"></i>在线选座</label>
+								<label><i class="i-e-ticket"></i>电子票</label>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</a>
+		<a href="detail.html" class="t-loop">
+			<div class="t-edge">
+				<div class="t-inner flexbox">
+					<div class="t-photo f-new" style="background-image:url(post/201412116122.png)">
+					</div>
+					<div class="flex1">
+						<h1 class="t-title">话剧《一个陌生女人的来信》</h1>
+						<div class="divider">
+						</div>
+						<ul class="t-info">
+							<li>
+								<label><i class="icon-thumbs-o-up"></i>推荐指数</label>
+								<span class="rank"><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span>
+							</li>
+							<li>
+								<label><i class="icon-calendar"></i>演出时间</label>
+								<span class="duration">14.05.14 - 15.05.18</span>
+							</li>
+							<li class="available">
+								<label><i class="i-book-seat"></i>在线选座</label>
+								<label><i class="i-e-ticket"></i>电子票</label>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</a>
+		</div>
+		<div class="drag-d" id="pullUp">
+			<span class="pullUpIcon"></span><span class="pullUpLabel">Pull up to refresh...</span>
 		</div>
 	</div>
 </div>
 </body>
-<script src="js/lib/jquery-1.8.2.min.js"></script>
-<script src="js/script.js"></script>
+
 </html>

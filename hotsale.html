@@ -13,10 +13,23 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="format-detection" content="address=no">
 <link rel="stylesheet" type="text/css" href="css/style-active.css">
+<script src="js/lib/jquery-1.8.2.min.js"></script>
+<script src="js/iscroll.js"></script>
+<script>
+$(function() {
+	var myscroll;
+	function loaded(){
+		setTimeout(function(){
+			myscroll=new iScroll("wrapper");
+		},100 );
+	}
+	window.addEventListener("load",loaded,false);
+})
+</script>
 </head>
 <body>
-<div class="wrap">
-	<div class="hotsale">
+<div class="wrap" id="wrapper">
+	<div class="hotsale" id="scroller">
 		<ul>
 			<li>
 				<div class="a-photo">
